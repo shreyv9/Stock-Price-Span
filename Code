@@ -1,0 +1,36 @@
+#include<stack>
+int* stockSpan(int *price, int size) {
+	// Write your code here
+    int *output=new int[size];  //Temporary array to store output content
+    stack<int> s;    //initilizing integer stack
+    output[0]=1; //initializing first element with zero
+    s.push(0);  //letting first index is highest and pushing it into stack
+	
+    for(int i=1;i<size;i++)
+    {  
+        
+        while(!s.empty() && price[s.top()]<price[i])
+        {
+            /*logic is clear here that if the price is high with the highest index placed in the stack then
+        pop out all the elements of the stack*/
+            s.pop();
+        }
+        if(s.empty())
+        {
+            /* if the ith  element is highest till now then it'll surely emptied the stack so will put 
+            i+1 in that place of the output array*/
+            output[i]=i+1;
+            
+        }
+        else
+        {
+            /* Else it is not greatest among all then we will put i- top element of the stack because as
+            per our code top element of the stack is highest price. */
+            output[i]=i-s.top();
+        }
+        // Now push index i in the stack for the next comparison
+        s.push(i);
+        
+      }
+    
+return output;
